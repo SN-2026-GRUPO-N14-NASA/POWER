@@ -4,12 +4,12 @@
 
 | Campo | Valor |
 |-|-|
-| **Grupo** | [15] |
+| **Grupo** | 15 |
 | **Integrantes** | Jakson José, Nayro Ganzer |
 | **API NASA escolhida** | POWER (inicialmente DONKI/MPC, trocada no início do projeto) |
 | **IA utilizada** | Claude (Anthropic) |
 | **Data de início** | 12-11-2026 |
-| **Data de conclusão** | [01-11-2026] |
+| **Data de conclusão** | 01-11-2026 |
 
 ---
 
