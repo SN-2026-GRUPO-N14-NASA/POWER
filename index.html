@@ -4,127 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NASA POWER - Clima e Energia Solar</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%98%80%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg: #0b1220;
-  --card: #141d31;
-  --borda: #24304d;
-  --texto: #e8edf7;
+  --bg: #0a1020;
+  --card: #131c33;
+  --borda: #25314f;
+  --texto: #eef2fb;
   --suave: #9aa8c7;
-  --destaque: #4da3ff;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
+  background: radial-gradient(circle at 10% 0%, #1b2a55 0%, transparent 40%), radial-gradient(circle at 90% 10%, #3a1d4f 0%, transparent 35%), var(--bg);
+  background-attachment: fixed;
   color: var(--texto);
+  min-height: 100vh;
 }
 header {
-  padding: 24px 20px 8px;
-  max-width: 1100px;
+  max-width: 1150px;
   margin: 0 auto;
+  padding: 28px 20px 8px;
 }
-h1 { margin: 0 0 4px; font-size: 1.6rem; }
-.sub { color: var(--suave); margin: 0; }
-main { max-width: 1100px; margin: 0 auto; padding: 12px 20px 40px; }
-.controles {
+h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+  background: linear-gradient(90deg, #ffca28, #ff7043 45%, #cc5de8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.sub { margin: 0; color: var(--suave); }
+main { max-width: 1150px; margin: 0 auto; padding: 12px 20px 48px; }
+.barra {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin: 16px 0;
-  align-items: end;
+  gap: 18px;
+  align-items: flex-start;
+  margin: 14px 0 18px;
 }
-label { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: var(--suave); }
-select {
-  background: var(--card);
+.grupo { display: flex; flex-direction: column; gap: 8px; }
+.grupo > span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--suave); }
+.linha { display: flex; flex-wrap: wrap; gap: 8px; }
+button {
+  font: inherit;
+  cursor: pointer;
   color: var(--texto);
+  background: var(--card);
   border: 1px solid var(--borda);
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 1rem;
-  min-width: 220px;
+  border-radius: 999px;
+  padding: 8px 14px;
+  transition: transform 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
+button:hover { transform: translateY(-2px); border-color: #5b6ea8; }
+button.ativo {
+  background: linear-gradient(135deg, #3b5bdb, #7048e8);
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(112, 72, 232, 0.4);
+}
+.chip { display: inline-flex; align-items: center; gap: 8px; }
+.chip i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.chip.ativo { background: var(--card); border-color: var(--cor); box-shadow: 0 0 0 1px var(--cor) inset, 0 4px 14px rgba(0, 0, 0, 0.35); }
 .atualizacao {
   margin-left: auto;
   font-size: 0.85rem;
   color: var(--suave);
   text-align: right;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 14px;
-  margin-bottom: 18px;
-}
-.card, .painel {
   background: var(--card);
   border: 1px solid var(--borda);
   border-radius: 12px;
-  padding: 16px;
+  padding: 10px 14px;
 }
-.card .rotulo { font-size: 0.8rem; color: var(--suave); }
-.card .valor { font-size: 1.8rem; font-weight: 700; margin-top: 6px; color: var(--destaque); }
-.painel { margin-bottom: 18px; }
-.painel h2 { margin: 0 0 12px; font-size: 1.1rem; }
-.grafico { position: relative; height: 320px; }
-.tabela-wrap { max-height: 360px; overflow: auto; }
+.atualizacao strong { color: var(--texto); }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-top: 4px solid var(--cor);
+  border-radius: 14px;
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35); }
+.card .rotulo { font-size: 0.82rem; color: var(--suave); }
+.card .valor { font-size: 1.9rem; font-weight: 800; margin-top: 6px; color: var(--cor); }
+.card .detalhe { font-size: 0.8rem; color: var(--suave); margin-top: 4px; }
+.painel {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+.painel h2 { margin: 0 0 4px; font-size: 1.1rem; }
+.painel p { margin: 0 0 12px; font-size: 0.82rem; color: var(--suave); }
+.grafico { position: relative; height: 340px; }
+.grafico.curto { height: 300px; }
+.tabela-wrap { max-height: 380px; overflow: auto; border-radius: 10px; }
 table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--borda); }
-th:first-child, td:first-child { text-align: left; }
-th { position: sticky; top: 0; background: var(--card); color: var(--suave); font-weight: 600; }
-.erro { color: #ff8a8a; padding: 12px 0; }
+th, td { padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--borda); white-space: nowrap; }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+th {
+  position: sticky;
+  top: 0;
+  background: #1a2542;
+  color: var(--suave);
+  cursor: pointer;
+  user-select: none;
+}
+th:hover { color: var(--texto); }
+tbody tr:hover { background: rgba(91, 110, 168, 0.18); }
+.pontinho { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; }
+.erro { color: #ff8a8a; padding: 6px 0; }
 </style>
 </head>
 <body>
 <header>
   <h1>NASA POWER: Clima e Energia Solar</h1>
-  <p class="sub">Dados climatológicos diários por coordenada geográfica</p>
+  <p class="sub">Dados climatológicos diários por coordenada geográfica. Selecione uma ou mais cidades para comparar.</p>
 </header>
 <main>
-  <div class="controles">
-    <label>Cidade
-      <select id="filtroLocal"></select>
-    </label>
-    <label>Variável do gráfico
-      <select id="filtroVariavel">
-        <option value="temp_media">Temperatura média (°C)</option>
-        <option value="precipitacao">Precipitação (mm/dia)</option>
-        <option value="radiacao_solar">Radiação solar (kWh/m²/dia)</option>
-        <option value="vento">Vento a 2 m (m/s)</option>
-        <option value="umidade">Umidade relativa (%)</option>
-      </select>
-    </label>
+  <div class="barra">
+    <div class="grupo">
+      <span>Cidades</span>
+      <div class="linha" id="chipsLocais"></div>
+    </div>
+    <div class="grupo">
+      <span>Variável</span>
+      <div class="linha" id="abasVariavel">
+        <button data-var="temp_media">Temperatura</button>
+        <button data-var="precipitacao">Chuva</button>
+        <button data-var="radiacao_solar">Radiação solar</button>
+        <button data-var="vento">Vento</button>
+        <button data-var="umidade">Umidade</button>
+      </div>
+    </div>
+    <div class="grupo">
+      <span>Período</span>
+      <div class="linha" id="abasPeriodo">
+        <button data-dias="7">7 dias</button>
+        <button data-dias="30">30 dias</button>
+        <button data-dias="60">60 dias</button>
+        <button data-dias="9999">Tudo</button>
+      </div>
+    </div>
     <div class="atualizacao" id="ultimaAtualizacao">Carregando...</div>
   </div>
 
   <div id="mensagemErro" class="erro"></div>
 
   <div class="cards">
-    <div class="card"><div class="rotulo">Temperatura média</div><div class="valor" id="cardTemp">-</div></div>
-    <div class="card"><div class="rotulo">Chuva acumulada</div><div class="valor" id="cardChuva">-</div></div>
-    <div class="card"><div class="rotulo">Radiação solar média</div><div class="valor" id="cardRad">-</div></div>
-    <div class="card"><div class="rotulo">Dias com dados</div><div class="valor" id="cardDias">-</div></div>
+    <div class="card" style="--cor:#ff7043"><div class="rotulo">Temperatura média</div><div class="valor" id="cardTemp">-</div><div class="detalhe" id="detTemp"></div></div>
+    <div class="card" style="--cor:#29b6f6"><div class="rotulo">Chuva acumulada (média por cidade)</div><div class="valor" id="cardChuva">-</div><div class="detalhe" id="detChuva"></div></div>
+    <div class="card" style="--cor:#ffca28"><div class="rotulo">Radiação solar média</div><div class="valor" id="cardRad">-</div><div class="detalhe" id="detRad"></div></div>
+    <div class="card" style="--cor:#7e57c2"><div class="rotulo">Umidade média</div><div class="valor" id="cardUmid">-</div><div class="detalhe" id="detUmid"></div></div>
   </div>
 
   <div class="painel">
     <h2 id="tituloGrafico">Evolução diária</h2>
+    <p>Passe o mouse sobre o gráfico para ver os valores de cada dia.</p>
     <div class="grafico"><canvas id="grafico"></canvas></div>
   </div>
 
   <div class="painel">
+    <h2 id="tituloRanking">Comparação entre cidades</h2>
+    <p>Clique em uma barra para adicionar ou remover a cidade da comparação.</p>
+    <div class="grafico curto"><canvas id="ranking"></canvas></div>
+  </div>
+
+  <div class="painel">
     <h2>Registros</h2>
+    <p>Clique no título de uma coluna para ordenar.</p>
     <div class="tabela-wrap">
       <table>
         <thead>
           <tr>
-            <th>Data</th>
-            <th>Temp. (°C)</th>
-            <th>Chuva (mm)</th>
-            <th>Radiação (kWh/m²)</th>
-            <th>Vento (m/s)</th>
-            <th>Umidade (%)</th>
+            <th data-campo="data">Data</th>
+            <th data-campo="local">Cidade</th>
+            <th data-campo="temp_media">Temp. (°C)</th>
+            <th data-campo="precipitacao">Chuva (mm)</th>
+            <th data-campo="radiacao_solar">Radiação (kWh/m²)</th>
+            <th data-campo="vento">Vento (m/s)</th>
+            <th data-campo="umidade">Umidade (%)</th>
           </tr>
         </thead>
         <tbody id="corpoTabela"></tbody>
@@ -132,7 +200,7 @@ th { position: sticky; top: 0; background: var(--card); color: var(--suave); fon
     </div>
   </div>
 </main>
-  
+
 <script src="config.js"></script>
 <script src="app.js"></script>
 </body>
