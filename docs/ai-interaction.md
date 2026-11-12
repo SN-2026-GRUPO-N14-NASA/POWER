@@ -26,6 +26,14 @@ DONKI / MPC
 Cruzamentos da magnetopausa: quando o vento solar penetra o campo magnético terrestre
 essa é minha API, pode me instruir e me ajudar a fazer essa atividade ?
 ```
+**Prompt enviado à IA (2ª mensagem, troca de API):**
+
+```
+Na vdd, vou usar outra API
+POWER
+Dados climatológicos e energia solar global por coordenada geográfica
+é essa aqui
+```
 
 **Resumo da resposta:**
 A IA propôs a ordem de trabalho (contas, banco, secrets, script, workflow, painel e documentação) e gerou um `setup.sql`, um `fetch_nasa.py` e um workflow para a DONKI/MPC.
