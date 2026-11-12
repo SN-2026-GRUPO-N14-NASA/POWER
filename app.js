@@ -137,4 +137,37 @@ async function carregarUltimaAtualizacao() {
   try {
     const lista = await consultar("execucoes?select=executado_em,status,registros_processados&order=executado_em.desc&limit=1");
     if (!lista.length) {
+      alvo.textContent = "Nenhuma execução registrada";
+      return;
+    }
+    const exec = lista[0];
+    const quando = new Date(exec.executado_em).toLocaleString("pt-BR");
+    alvo.innerHTML = "Última atualização do pipeline:<br><strong>" + escapeHtml(quando) +
+      "</strong> (" + escapeHtml(exec.status) + ", " + escapeHtml(exec.registros_processados) + " registros)";
+  } catch (erro) {
+    alvo.textContent = "Última atualização indisponível";
+  }
+}
+
+async function iniciar() {
+  try {
+    dados = await consultar("clima_diario?select=local,data,temp_media,precipitacao,radiacao_solar,vento,umidade&order=data.asc&limit=1000");
+    if (!dados.length) {
+      document.getElementById("mensagemErro").textContent = "Nenhum dado encontrado na tabela.";
+      return;
+    }
+    preencherLocais();
+    atualizarTela();
+  } catch (erro) {
+    document.getElementById("mensagemErro").textContent = erro.message;
+  }
+  carregarUltimaAtualizacao();
+}
+
+document.getElementById("filtroLocal").addEventListener("change", atualizarTela);
+document.getElementById("filtroVariavel").addEventListener("change", function () {
+  atualizarGrafico(registrosDoLocal());
+});
+
+iniciar();
       alvo.textContent = "Nenhuma execução
