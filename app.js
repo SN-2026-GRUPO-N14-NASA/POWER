@@ -168,6 +168,4 @@ document.getElementById("filtroLocal").addEventListener("change", atualizarTela)
 document.getElementById("filtroVariavel").addEventListener("change", function () {
   atualizarGrafico(registrosDoLocal());
 });
-
 iniciar();
-      alvo.textContent = "Nenhuma execução
