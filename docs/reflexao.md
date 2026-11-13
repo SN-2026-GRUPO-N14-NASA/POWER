@@ -39,6 +39,6 @@ Outra ajuda importante foi o diagnóstico de erros: quando enviamos prints do Co
 
 ## Opinião do grupo
 
-[A Ia conseguiu ajudar sim e muito. As nossas principais dificuldades foram, como integrar a API, de que forma construir as tabelas no SQL e pequenos problemas com a conexão do repositório juntamente com o Supabase.
+A Ia conseguiu ajudar sim e muito. As nossas principais dificuldades foram, como integrar a API, de que forma construir as tabelas no SQL e pequenos problemas com a conexão do repositório juntamente com o Supabase.
 A IA teve um importante trabalho dentro disso tudo, auxiliando e ensinando como fazer.
-Acho que o principal erro foi que ela não tinha informações certas de onde ir no Supabase e GitHub pra fazer certas coisas, mas pesquisando e procurando sozinhos conseguimos fazer isso tranquilamente]
+Acho que o principal erro foi que ela não tinha informações certas de onde ir no Supabase e GitHub pra fazer certas coisas, mas pesquisando e procurando sozinhos conseguimos fazer isso tranquilamente
